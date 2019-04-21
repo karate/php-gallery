@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+site:
+  name: My site
+  description: My site's description
+
+  images:
+    max_width: 1024
+    thumb_width: 300
+
+paths:
+  # Source
+  image_source_dir: source/gallery
+
+  # Destination
+  export_dir: publish
+  gallery_dir: gallery
+  resources_dir: resources
+  vendors_dir: vendors

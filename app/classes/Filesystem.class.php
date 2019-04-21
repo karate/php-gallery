@@ -1,0 +1,88 @@
+<?php
+
+class Filesystem {
+
+  /**
+   *  Creates basic folder structure in 'publish' directory
+   * */
+  static function create() {
+    echo "Creating filesystem structure...\n";
+    
+    $dirs = [
+      Settings::get_export_dir(),
+      Settings::get_export_dir() . Settings::get_gallery_dir(),
+      Settings::get_export_dir() . Settings::get_gallery_dir() . 'thumbs/',
+      Settings::get_export_dir() . Settings::get_resources_dir(),
+      Settings::get_export_dir() . Settings::get_vendors_dir(),
+    ];
+
+    foreach ($dirs as $dir) {
+      self::create_dir($dir);
+    }
+  }
+
+  /**
+   *  Creates a single direcotry if not already there
+   */
+  private function create_dir($dir_name) {
+    if (!file_exists($dir_name)) {
+      if (!mkdir($dir_name)) {
+        echo "! Permission denied: Could not create dir $dir_name\n";
+        die;
+      }
+    }
+  }
+
+
+  /**
+   *  Creates the index.html file
+   */
+  static function create_html ($markup) {
+    $fp = fopen(Settings::get_export_dir() . 'index.html', 'w');
+    fputs($fp, $markup);
+    fclose($fp);
+  }
+
+
+  /**
+   * Copies 'source/resources' in the 'publish' directory
+   */
+  static function copy_files() {
+    self::copy_directory('source/resources', Settings::get_export_dir() . 'resources');
+  }
+
+  /**
+   * Recursive function that copies a directory and all it's contents
+   */
+  private static function copy_directory($src,$dst) {
+    $dir = opendir($src);
+    if (!file_exists($dst)) {
+      mkdir($dst);
+    }
+    while(false !== ( $file = readdir($dir)) ) {
+      if (( $file != '.' ) && ( $file != '..' )) {
+        if ( is_dir($src . '/' . $file) ) {
+          self::copy_directory($src . '/' . $file, $dst . '/' . $file);
+        }
+        else {
+          copy($src . '/' . $file, $dst . '/' . $file);
+        }
+      }
+    }
+    closedir($dir);
+  }
+
+  static function delete_dir($dir) {
+    if (file_exists($dir)) {
+      $contents = glob($dir . '*', GLOB_MARK);
+      foreach ($contents as $file) {
+          if (is_dir($file)) {
+              self::delete_dir($file);
+          } else {
+              unlink($file);
+          }
+      }
+      rmdir($dir);
+    }
+  }
+}

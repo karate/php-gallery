@@ -1,0 +1,95 @@
+html {
+  background-color: #fefefe;
+  color: #333;
+  font-family: 'Roboto Slab', serif;
+}
+
+body {
+  margin: 10px;
+}
+a {
+  outline: 0;
+}
+
+h1, h2 {
+  text-shadow: 1px 1px 1px #aaa;
+}
+
+.container {
+  max-width: 960px;
+  margin: auto;
+}
+
+.date {
+  font-style: italic;
+  color: #555;
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gallery a {
+  margin: 10px;
+  /*width: 300px;*/
+  height: 220px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #333;
+  border-radius: 4px;
+  position: relative;
+}
+
+.gallery a:hover .caption {
+  opacity: 1;
+}
+
+.gallery .caption {
+   
+  opacity: 0; 
+  -webkit-transition: all 0.3s ease-in-out;
+       -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+         -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+  
+  position: absolute;
+  top: 0; left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #eee;
+  padding: 10px;
+  width: calc(100% - 20px);
+  font-size: 0.85em;
+  border-radius: 2px 2px 4px 4px;
+}
+
+.gallery img {
+  width: 300px;
+  height: auto;
+}
+
+/* Lightbox overrides */
+.lb-data .lb-caption {
+  font-weight: normal;
+  font-size: 1em;
+}
+
+
+
+@media screen and (max-width: 680px) {
+
+  .gallery a {
+    margin: 5px;
+    width: 150px;
+    height: 85px;
+  }
+
+  .gallery span.caption {
+    padding: 5px;
+    width: 140px;
+    font-size: 0.7em;
+  }
+
+}
+    

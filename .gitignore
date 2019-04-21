@@ -1,0 +1,5 @@
+vendor
+publish
+source/gallery
+*.swp
+composer.lock

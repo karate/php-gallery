@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>{{ site.name }}</h1>
+  <span class="date">{{ "now"|date("F d, Y") }}</span>
+  <h2>{{ site.description }}</h2>
+
+  <div class="gallery">
+    {% for image in content %}
+    <a href="{{ image.href }}" data-lightbox="gallery" data-title="{{ image.title }}">
+      <img src="{{ image.thumb }}" alt="">
+      <span class="caption">{{ image.title  }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  
+</div>
