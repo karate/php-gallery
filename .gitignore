@@ -1,5 +1,5 @@
 vendor
 publish
-source/gallery
+source/gallery/*
 *.swp
 composer.lock
