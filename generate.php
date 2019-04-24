@@ -3,9 +3,12 @@
 	// Hide warnings
 	//error_reporting(E_ERROR | E_PARSE);
 
+  // Declare strict type
+  declare(strict_types=1);
+
 	// Composer's autoload
 	require_once 'vendor/autoload.php';
-	
+
 	// Dynamically load classes from app/classes/*.class.php
 	spl_autoload_register(function ($class_name) {
 		require_once('app/classes/'.$class_name.'.class.php');
@@ -30,10 +33,10 @@
   $loader = new Twig_Loader_Filesystem('source/templates');
   $twig = new Twig_Environment($loader);
   $template = $twig->loadTemplate('page.html.twig');
-  
+
   // Set template variables
   $images = Reader::get_images();
-  
+
   $vars['site'] = [
     'name' => Settings::get_site_name(),
     'description' => Settings::get_site_description(),
@@ -55,7 +58,7 @@
       'title' => $image_title,
     ];
   }
-  
+
   // Render index.html
   $output = $template->render($vars);
   Filesystem::create_html($output);
