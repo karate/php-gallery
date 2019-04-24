@@ -5,9 +5,9 @@ class Filesystem {
   /**
    *  Creates basic folder structure in 'publish' directory
    * */
-  static function create() {
+  static function create(): void {
     echo "Creating filesystem structure...\n";
-    
+
     $dirs = [
       Settings::get_export_dir(),
       Settings::get_export_dir() . Settings::get_gallery_dir(),
@@ -24,11 +24,12 @@ class Filesystem {
   /**
    *  Creates a single direcotry if not already there
    */
-  private function create_dir($dir_name) {
+  static function create_dir($dir_name): void {
     if (!file_exists($dir_name)) {
-      if (!mkdir($dir_name)) {
-        echo "! Permission denied: Could not create dir $dir_name\n";
-        die;
+      try {
+        mkdir($dir_name);
+      } catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
       }
     }
   }
@@ -37,7 +38,7 @@ class Filesystem {
   /**
    *  Creates the index.html file
    */
-  static function create_html ($markup) {
+  static function create_html ($markup): void {
     $fp = fopen(Settings::get_export_dir() . 'index.html', 'w');
     fputs($fp, $markup);
     fclose($fp);
@@ -47,14 +48,14 @@ class Filesystem {
   /**
    * Copies 'source/resources' in the 'publish' directory
    */
-  static function copy_files() {
+  static function copy_files(): void {
     self::copy_directory('source/resources', Settings::get_export_dir() . 'resources');
   }
 
   /**
    * Recursive function that copies a directory and all it's contents
    */
-  private static function copy_directory($src,$dst) {
+  private static function copy_directory($src,$dst): void {
     $dir = opendir($src);
     if (!file_exists($dst)) {
       mkdir($dst);
@@ -72,7 +73,7 @@ class Filesystem {
     closedir($dir);
   }
 
-  static function delete_dir($dir) {
+  static function delete_dir($dir): void {
     if (file_exists($dir)) {
       $contents = glob($dir . '*', GLOB_MARK);
       foreach ($contents as $file) {

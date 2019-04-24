@@ -8,15 +8,15 @@ class ImageHelper {
      * Resize all images from the image source directory, create thumbnails, and save them
      * in the 'publish' directory
      */
-    static function resize_all($prune = false) {
+    static function resize_all($prune = false): void {
       if ($prune) {
         echo "Deleting old gallery...\n";
         Filesystem::delete_dir(Settings::get_export_dir() . Settings::get_gallery_dir());
       }
-      
+
       // Create filesystem
       Filesystem::create();
-      
+
       echo "Resizing images...\n";
       $images = Reader::get_images();
       self::$gallery_dir = Settings::get_export_dir() . Settings::get_gallery_dir();
@@ -38,24 +38,24 @@ class ImageHelper {
     /**
      * Resize a single image and create a thumbnail
      */
-    private static function resize_image($filename, $type = 'default') {
-      $full_path_file = Settings::get_image_source_dir() . $filename;			
+    private static function resize_image($filename, $type = 'default'): void {
+      $full_path_file = Settings::get_image_source_dir() . $filename;
 
       $info = getimagesize($full_path_file);
       $mime = $info['mime'];
-      
+
       if (!in_array($mime, ['image/jpeg', 'image/png'])) {
         throw new Exception("Unknown image type: $filename\n");
-        
+
       }
 
       if ($type == 'thumb') {
         $filename = self::$gallery_dir . 'thumbs/' . $filename;
-        $max_width = Settings::get_thumb_width();			
+        $max_width = Settings::get_thumb_width();
       }
       else {
         $filename = self::$gallery_dir . $filename;
-        $max_width = Settings::get_image_width();			
+        $max_width = Settings::get_image_width();
       }
 
       $imagesize = getimagesize($full_path_file);
