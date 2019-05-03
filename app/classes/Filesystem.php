@@ -1,5 +1,7 @@
 <?php
 
+namespace Gallery;
+
 class Filesystem {
 
   /**

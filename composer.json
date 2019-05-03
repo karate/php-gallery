@@ -4,5 +4,10 @@
         "symfony/yaml": "^3.2",
         "twig/twig": "^2.3",
         "guiguiboy/php-cli-progress-bar": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gallery\\": "app/classes/"
+        }
     }
 }

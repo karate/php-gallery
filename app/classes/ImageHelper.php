@@ -1,5 +1,7 @@
 <?php
 
+namespace Gallery;
+
 class ImageHelper {
   private static $max_width;
   private static $gallery_dir;

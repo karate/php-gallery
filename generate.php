@@ -1,18 +1,13 @@
 #!/usr/bin/php
 <?php
-	// Hide warnings
-	//error_reporting(E_ERROR | E_PARSE);
+  // Hide warnings
+  //error_reporting(E_ERROR | E_PARSE);
 
   // Declare strict type
   declare(strict_types=1);
 
-	// Composer's autoload
-	require_once 'vendor/autoload.php';
-
-	// Dynamically load classes from app/classes/*.class.php
-	spl_autoload_register(function ($class_name) {
-		require_once('app/classes/'.$class_name.'.class.php');
-	});
+  // Composer's autoload
+  require_once 'vendor/autoload.php';
 
   $prune = false;
   if (count($argv) > 1) {
@@ -21,13 +16,13 @@
     }
   }
   // Load setting
-  Settings::read();
+  Gallery\Settings::read();
 
   // Read gallery folder
-  Reader::read_gallery();
+  Gallery\Reader::read_gallery();
 
   // Resize images, create thumbnails, and save them in 'publish/gallery'
-  ImageHelper::resize_all($prune);
+  Gallery\ImageHelper::resize_all($prune);
 
   // Load twig templates
   $loader = new Twig_Loader_Filesystem('source/templates');
@@ -35,11 +30,11 @@
   $template = $twig->loadTemplate('page.html.twig');
 
   // Set template variables
-  $images = Reader::get_images();
+  $images = Gallery\Reader::get_images();
 
   $vars['site'] = [
-    'name' => Settings::get_site_name(),
-    'description' => Settings::get_site_description(),
+    'name' => Gallery\Settings::get_site_name(),
+    'description' => Gallery\Settings::get_site_description(),
   ];
 
   // Create image properties for yaml
@@ -53,16 +48,16 @@
     $image_title = str_replace("_", " ", $image_title);
 
     $vars['content'][] = [
-      'href' => Settings::get_gallery_dir() . $image,
-      'thumb' => Settings::get_gallery_dir() . 'thumbs/' . $image,
+      'href' => Gallery\Settings::get_gallery_dir() . $image,
+      'thumb' => Gallery\Settings::get_gallery_dir() . 'thumbs/' . $image,
       'title' => $image_title,
     ];
   }
 
   // Render index.html
   $output = $template->render($vars);
-  Filesystem::create_html($output);
+  Gallery\Filesystem::create_html($output);
 
   // Copy css, js, and image files in 'publish'
-  Filesystem::copy_files();
+  Gallery\Filesystem::copy_files();
 
