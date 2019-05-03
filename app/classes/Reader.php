@@ -8,7 +8,7 @@ class Reader {
    /**
     * Read the 'gallery' directory and get all .jpg files
     */
-	static function read_gallery(): void {
+	static function read_gallery() {
 		echo "Reading gallery...\n";
 		$directory = Settings::get_image_source_dir();
 		$images = glob($directory . "*");

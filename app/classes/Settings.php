@@ -9,7 +9,7 @@ class Settings {
   /**
    * Parse the app/settings.yml file
    */
-	static function read(): void {
+	static function read() {
 		echo "Reading settings...\n";
 		$settings = Yaml::parse(file_get_contents('app/settings.yml'));
 

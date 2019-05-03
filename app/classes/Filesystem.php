@@ -7,7 +7,7 @@ class Filesystem {
   /**
    *  Creates basic folder structure in 'publish' directory
    * */
-  static function create(): void {
+  static function create() {
     echo "Creating filesystem structure...\n";
 
     $dirs = [
@@ -26,7 +26,7 @@ class Filesystem {
   /**
    *  Creates a single direcotry if not already there
    */
-  static function create_dir($dir_name): void {
+  static function create_dir($dir_name) {
     if (!file_exists($dir_name)) {
       try {
         mkdir($dir_name);
@@ -40,7 +40,7 @@ class Filesystem {
   /**
    *  Creates the index.html file
    */
-  static function create_html ($markup): void {
+  static function create_html ($markup) {
     $fp = fopen(Settings::get_export_dir() . 'index.html', 'w');
     fputs($fp, $markup);
     fclose($fp);
@@ -50,14 +50,14 @@ class Filesystem {
   /**
    * Copies 'source/resources' in the 'publish' directory
    */
-  static function copy_files(): void {
+  static function copy_files() {
     self::copy_directory('source/resources', Settings::get_export_dir() . 'resources');
   }
 
   /**
    * Recursive function that copies a directory and all it's contents
    */
-  private static function copy_directory($src,$dst): void {
+  private static function copy_directory($src,$dst) {
     $dir = opendir($src);
     if (!file_exists($dst)) {
       mkdir($dst);
@@ -75,7 +75,7 @@ class Filesystem {
     closedir($dir);
   }
 
-  static function delete_dir($dir): void {
+  static function delete_dir($dir) {
     if (file_exists($dir)) {
       $contents = glob($dir . '*', GLOB_MARK);
       foreach ($contents as $file) {

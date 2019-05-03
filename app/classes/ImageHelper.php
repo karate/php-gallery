@@ -10,7 +10,7 @@ class ImageHelper {
      * Resize all images from the image source directory, create thumbnails, and save them
      * in the 'publish' directory
      */
-    static function resize_all($prune = false): void {
+    static function resize_all($prune = false) {
       if ($prune) {
         echo "Deleting old gallery...\n";
         Filesystem::delete_dir(Settings::get_export_dir() . Settings::get_gallery_dir());
@@ -40,7 +40,7 @@ class ImageHelper {
     /**
      * Resize a single image and create a thumbnail
      */
-    private static function resize_image($filename, $type = 'default'): void {
+    private static function resize_image($filename, $type = 'default') {
       $full_path_file = Settings::get_image_source_dir() . $filename;
 
       $info = getimagesize($full_path_file);
